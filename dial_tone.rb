@@ -1,0 +1,21 @@
+require "coreaudio"
+
+dev = CoreAudio.default_output_device
+buf = dev.output_loop(44000)
+buf2 = dev.output_loop(44000)
+
+phase = Math::PI * 2.0 * 440.0 / 44000.0
+phase2 = Math::PI * 2.0 * 350.0 / 44000.0
+
+44000.times do |i|
+  buf[i] = ((0.4 * Math.sin(phase*i)) * 0x7FFF).round
+  buf2[i] = ((0.4 * Math.sin(phase2*i)) * 0x7FFF).round
+end
+
+
+
+buf.start
+buf2.start
+
+until true==false
+end    
